@@ -1,0 +1,31 @@
+server:
+  port: 9090
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/access_system?characterEncoding=utf8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: mbto6Li0
+
+log:
+  level:
+    root: info
+    sql: error
+    my: debug
+  file: logs
+  maxsize: 2MB
+
+app:
+  # 控制swagger文档开关
+  swagger: true
+  # 推流地址
+  live-url: rtmp://192.168.1.35:8000/live
+  # 播放地址
+  play-url: http://192.168.1.35:8080/live
+  # dvrs 录播文件地址，这里直接使用后端server所在的目录方便调试
+  dvr-path: D://data/srs-live/live-server
+  # 文件上传地址，这里直接使用后端server所在的目录方便调试
+  upload-base-path: D://data/srs-live/live-server
+  # 签名过期时间，单位秒
+  signature-expired-time: 600

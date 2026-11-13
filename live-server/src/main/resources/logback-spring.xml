@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<configuration>
+	<springProperty name="logFile" source="log.file" />
+	<springProperty name="rootlevel" source="log.level.root" />
+	<springProperty name="mylevel" source="log.level.my" />
+	<springProperty name="sqllevel" source="log.level.sql" />
+	<springProperty name="maxFileSize" source="log.maxsize" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d [%thread] %-5level %logger{50} -[%file:%line]- %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="adminLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>%d [%thread] %-5level -[%file:%line]- %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${user.dir}/${logFile}/%d{yyyyMMdd}_%i.log</fileNamePattern>
+			<maxFileSize>${maxFileSize}</maxFileSize>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="com.winter.mapper" level="${sqllevel}" additivity="true">
+		<appender-ref ref="adminLog"/>
+	</logger>
+
+	<logger name="com.winter" level="${mylevel}" additivity="true">
+		<appender-ref ref="adminLog" />
+	</logger>
+
+	<root level="${rootlevel}">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>
